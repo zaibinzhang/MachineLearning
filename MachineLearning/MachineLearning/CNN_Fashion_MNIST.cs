@@ -18,9 +18,9 @@ public class CNN_Fashion_MNIST
 {
     private readonly string TrainImagePath = @"C:\Code\Git\tf_not\Asset\mnist_png.tar\mnist_png\training";
     private readonly string TestImagePath = @"C:\Code\Git\tf_not\Asset\mnist_png.tar\mnist_png\testing";
-    private readonly string train_date_path = @"C:\Code\Git\MachineLearning\MachineLearning\Model\cnn_train_data.bin";
-    private readonly string train_label_path = @"C:\Code\Git\MachineLearning\MachineLearning\Model\cnn_train_label.bin";
-    private readonly string ModelFile = @"C:\Code\Git\MachineLearning\MachineLearning\Model\cnn_fashion_mnist.h5";
+    private readonly string train_date_path = @"C:\Test\cnn_train_data.bin";
+    private readonly string train_label_path = @"C:\Test\cnn_train_label.bin";
+    private readonly string ModelFile = @"C:\Test\cnn_fashion_mnist.h5";
 
     private readonly int img_rows = 28;
     private readonly int img_cols = 28;
@@ -33,8 +33,6 @@ public class CNN_Fashion_MNIST
         model.summary();
         model.load_weights(ModelFile);
 
-        Console.WriteLine("press any key");
-        Console.ReadKey();
 
         model.compile(optimizer: keras.optimizers.Adam(0.0001f),
             loss: keras.losses.SparseCategoricalCrossentropy(),
