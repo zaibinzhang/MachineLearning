@@ -2,5 +2,5 @@
 
 using MachineLearning;
 
-var a=new NonlinearRegressionWithKeras();
+var a=new LinearRegression();
 a.Run();
