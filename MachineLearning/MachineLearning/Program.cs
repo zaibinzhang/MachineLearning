@@ -2,5 +2,5 @@
 
 using MachineLearning;
 
-var a=new CNN_Fashion_MNIST();
+var a=new NonlinearRegressionWithKeras();
 a.Run();
