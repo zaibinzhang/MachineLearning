@@ -1,59 +1,38 @@
 ﻿using Tensorflow;
+using Tensorflow.Keras;
+using Tensorflow.Keras.ArgsDefinition;
 using Tensorflow.Keras.Engine;
+using Tensorflow.Keras.Layers;
+using Tensorflow.Keras.Utils;
 using Tensorflow.NumPy;
 using static Tensorflow.Binding;
 using static Tensorflow.KerasApi;
 
+var numClasses = 10;
+var inputShape = new Shape(28, 28, 1);
+
+var ((xTrain, yTrain), (xTest, yTest)) = keras.datasets.mnist.load_data();
+xTrain /= 255;
+xTest /= 255;
+
+xTrain = np.expand_dims(xTrain, -1);
+xTest = np.expand_dims(xTest, -1);
+Console.WriteLine("x_train shape:" + xTrain.shape);
+Console.WriteLine(xTrain.shape[0] + " train samples");
+Console.WriteLine(xTest.shape[0] + " test samples");
+
+yTrain = np_utils.to_categorical(yTrain, numClasses);
+yTest = np_utils.to_categorical(yTest, numClasses);
+
 var model = keras.Sequential();
-
-#region 官方例子
-
-
-
-
-//Model model;
-//NDArray x_train, y_train, x_test, y_test;
-
-////tf.enable_eager_execution();
-////PrepareData
-//(x_train, y_train, x_test, y_test) = keras.datasets.mnist.load_data();
-//x_train = x_train.reshape((60000, 784)) / 255f;
-//x_test = x_test.reshape((10000, 784)) / 255f;
-
-////BuildModel
-//// input layer
-//var inputs = keras.Input(shape: 784);
-
-//// 1st dense layer
-//var outputs = keras.layers.Dense(64, activation: keras.activations.Relu).Apply(inputs);
-
-//// 2nd dense layer
-//outputs = keras.layers.Dense(64, activation: keras.activations.Relu).Apply(outputs);
-
-//// output layer
-//outputs = keras.layers.Dense(10).Apply(outputs);
-
-//// build keras model
-//model = keras.Model(inputs, outputs, name: "mnist_model");
-//// show model summary
-//model.summary();
-
-//// compile keras model into tensorflow's static graph
-//model.compile(loss: keras.losses.SparseCategoricalCrossentropy(from_logits: true),
-//    optimizer: keras.optimizers.RMSprop(),
-//    metrics: new[] { "accuracy" });
-
-//// train model by feeding data and labels.
-//model.fit(x_train, y_train, batch_size: 64, epochs: 2, validation_split: 0.2f);
-
-//// evluate the model
-//model.evaluate(x_test, y_test, verbose: 2);
-
-//// save and serialize model
-//model.save("d:\\mnist_model.mod");
-
-// recreate the exact same model purely from the file:
-// model = keras.models.load_model("path_to_my_model");
-#endregion
+model.add(keras.Input(inputShape));
+model.add(keras.layers.Conv2D(32, kernel_size: (3, 3), activation: keras.activations.Relu));
+model.add(keras.layers.MaxPooling2D((2, 2)));
+model.add(keras.layers.Conv2D(32, kernel_size: (3, 3), activation: keras.activations.Relu));
+model.add(keras.layers.MaxPooling2D((2, 2)));
+model.add(keras.layers.Flatten());
+model.add(keras.layers.Dropout(0.5f));
+model.add(keras.layers.Dense(numClasses, activation: keras.activations.Softmax));
+model.summary();
 
 Console.ReadKey();
