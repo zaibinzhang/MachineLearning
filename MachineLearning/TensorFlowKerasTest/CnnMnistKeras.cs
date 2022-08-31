@@ -23,13 +23,14 @@ public class CnnMnistKeras
 
         */
 
+        tf.enable_eager_execution();
 
         var numClasses = 10;
         var inputShape = new Shape(28, 28, 1);
 
         #region 训练数据
 
-        var (xTrain, yTrain, xTest, yTest) = keras.datasets.mnist.load_data();
+        var ((xTrain, yTrain), (xTest, yTest)) = keras.datasets.mnist.load_data();
         xTrain /= 255f;
         xTest /= 255f;
 
@@ -75,7 +76,7 @@ public class CnnMnistKeras
 
         model.compile(loss: keras.losses.CategoricalCrossentropy(), optimizer: keras.optimizers.Adam(), metrics: new[] { "accuracy" });
 
-        model.fit(xTrain, yTrain, batchSize, epochs, validation_split: 0.1f);
+        model.fit(xTrain, yTrain, batch_size: batchSize, epochs: epochs, validation_split: 0.1f);
 
         #endregion
 
