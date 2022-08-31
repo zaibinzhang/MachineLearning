@@ -23,8 +23,8 @@ var inputShape = new Shape(28, 28, 1);
 #region 训练数据
 
 var (xTrain, yTrain, xTest, yTest) = keras.datasets.mnist.load_data();
-xTrain = xTrain.reshape((60000, 784)) / 255f;
-xTest = xTest.reshape((10000, 784)) / 255f;
+xTrain /= 255f;
+xTest /= 255f;
 
 xTrain = np.expand_dims(xTrain, -1);
 xTest = np.expand_dims(xTest, -1);
@@ -32,8 +32,8 @@ Console.WriteLine("x_train shape:" + xTrain.shape);
 Console.WriteLine(xTrain.shape[0] + " train samples");
 Console.WriteLine(xTest.shape[0] + " test samples");
 
-//yTrain = np_utils.to_categorical(yTrain, numClasses);
-//yTest = np_utils.to_categorical(yTest, numClasses);
+yTrain = np_utils.to_categorical(yTrain, numClasses);
+yTest = np_utils.to_categorical(yTest, numClasses);
 
 #endregion
 
