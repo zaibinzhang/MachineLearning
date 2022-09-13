@@ -1,8 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Keras.Datasets;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Keras.Datasets;
 using Numpy;
 using K = Keras.Backend;
 using Keras;
@@ -10,9 +6,6 @@ using Keras.Models;
 using Keras.Layers;
 using Keras.Utils;
 using Keras.Optimizers;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Xml.Linq;
 
 int batchSize = 200;
 int numClasses = 10;
