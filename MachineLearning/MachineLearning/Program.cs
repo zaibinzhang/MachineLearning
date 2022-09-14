@@ -65,7 +65,6 @@ model.Compile(loss: "categorical_crossentropy",
 var (xTrain1, yTrain1) = Tool.LoadTrainingData();
 
 model.Fit(xTrain1, yTrain1,
-    batch_size: batchSize,
     epochs: epochs,
     verbose: 1);
 
